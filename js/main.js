@@ -1,0 +1,5 @@
+(function($) {
+
+    $('.thumb').PhotoEnlarger();
+
+}(jQuery));
