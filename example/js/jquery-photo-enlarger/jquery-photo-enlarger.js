@@ -63,7 +63,12 @@
         return plugin.each(function() {
 
             var $thumb = $(this),
-                $thumb_img = $thumb.find('img:first');
+                $thumb_img = $thumb.find('img:first'),
+                large_img_url = $thumb_img.data('large_photo'),
+                _img = new Image();
+
+            // pre-load large images
+            _img.src = large_img_url;
 
             $thumb.append('<div class="state-icon">');
             $thumb_img.data('small_photo', $thumb_img.attr('src'));
