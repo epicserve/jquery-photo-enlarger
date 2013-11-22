@@ -71,7 +71,6 @@
             _img.src = large_img_url;
 
             $thumb.append('<div class="state-icon">');
-            $thumb_img.data('small_photo', $thumb_img.attr('src'));
             $thumb_img.click(function() {
                 plugin.enlarge($thumb);
             });
