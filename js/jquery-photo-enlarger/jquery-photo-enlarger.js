@@ -7,7 +7,7 @@
 
         var plugin = this,
             default_options = {
-                'photo_max_width': 760,
+                'max_width_container': null,
                 'caption_fadein_speed': 500,
                 'caption_fadeout_speed': 500
             };
@@ -28,8 +28,13 @@
                     max_width = lg_img_orig_width,
                     max_height = lg_img_orig_height;
 
-                if (lg_img_orig_width > plugin.options.photo_max_width) {
-                    max_width = plugin.options.photo_max_width;
+                if (plugin.options.max_width_container === null) {
+                    max_width = $thumb.parent().parent().width();
+                } else if (plugin.options.max_width_container instanceof $) {
+                    max_width = plugin.options.max_width_container.width();
+                }
+
+                if (lg_img_orig_width > max_width) {
                     max_height = lg_img_orig_height * (max_width / lg_img_orig_width);
                 }
 
