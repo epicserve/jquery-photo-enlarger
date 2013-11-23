@@ -14,4 +14,4 @@ TODO
 - Design a better example site/page
 - Make it bower installable
 - Add some tests
-
+- Make the first release
