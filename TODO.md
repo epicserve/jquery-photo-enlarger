@@ -6,6 +6,6 @@ TODO
 <strike>- Make it so it preloads images</strike>
 - Add/pick a License
 - Add documentation
-- Add grunt tasks for updating the Github page
+<strike>- Add grunt tasks for updating the Github page</strike>
 - Come up with a better name
 - Design a better example site/page
