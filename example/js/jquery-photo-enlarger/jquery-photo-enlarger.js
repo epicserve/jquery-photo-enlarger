@@ -9,7 +9,9 @@
             default_options = {
                 'max_width_container': null,
                 'caption_fadein_speed': 500,
-                'caption_fadeout_speed': 500
+                'caption_fadeout_speed': 500,
+                'enlarge_speed': 300,
+                'shrink_speed': 300
             };
 
         plugin.options = $.extend(default_options, options);
@@ -44,7 +46,7 @@
                 $thumb_lg_div.css({width: $thumb_img[0].width, height: $thumb_img[0].height});
                 $thumb.append($thumb_lg_div);
                 $thumb_lg_div.show();
-                $thumb_lg_div.animate({width: max_width, height: max_height }, 500, function() {
+                $thumb_lg_div.animate({width: max_width, height: max_height }, plugin.options.enlarge_speed, function() {
 
                     $thumb_lg_div.append($caption);
                     $thumb_lg_div.hover(
@@ -65,7 +67,7 @@
                 $thumb_img = $thumb.find('img:first');
 
             $thumb_lg_div.find('.caption').fadeOut(100, function() {
-                $thumb_lg_div.animate({width: $thumb_img.width(), height: $thumb_img.height() }, 500, function() {
+                $thumb_lg_div.animate({width: $thumb_img.width(), height: $thumb_img.height() }, plugin.options.shrink_speed, function() {
                     $thumb_lg_div.remove();
                 });
             });
