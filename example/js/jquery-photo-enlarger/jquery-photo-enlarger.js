@@ -7,7 +7,9 @@
 
         var plugin = this,
             default_options = {
-                'photo_max_width': 760
+                'photo_max_width': 760,
+                'caption_fadein_speed': 500,
+                'caption_fadeout_speed': 500
             };
 
         plugin.options = $.extend(default_options, options);
@@ -41,8 +43,8 @@
 
                     $thumb_lg_div.append($caption);
                     $thumb_lg_div.hover(
-                        function() { $caption.show(); },
-                        function() { $caption.hide(); }
+                        function() { $caption.fadeIn(plugin.options.caption_fadein_speed); },
+                        function() { $caption.fadeOut(plugin.options.caption_fadeout_speed); }
                     );
 
                     $thumb_lg_div.find('img:first').click(function() { plugin.shrink($thumb); });
