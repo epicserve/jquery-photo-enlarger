@@ -1,3 +1,6 @@
+
+'use strict';
+
 (function($) {
 
     $.fn.PhotoEnlarger = function(options) {
@@ -15,10 +18,11 @@
 
             $thumb_lg_img.attr('src', $thumb_img.data('large_photo'));
 
-            $thumb_lg_img.imagesLoaded().done(function(instance) {
+            $thumb_lg_img.imagesLoaded().done(function() {
 
                 var lg_img_orig_width = $thumb_lg_img[0].width,
                     lg_img_orig_height = $thumb_lg_img[0].height,
+                    $caption = $('<div class="caption">'),
                     max_width = lg_img_orig_width,
                     max_height = lg_img_orig_height;
 
@@ -27,7 +31,7 @@
                     max_height = lg_img_orig_height * (max_width / lg_img_orig_width);
                 }
 
-                $caption = $('<div class="caption">').html($thumb_img.data('caption'));
+                $caption.html($thumb_img.data('caption'));
                 $thumb_lg_div.append($thumb_lg_img).append($('<div class="state-icon">'));
                 $thumb_lg_div.hide();
                 $thumb_lg_div.css({width: $thumb_img[0].width, height: $thumb_img[0].height});
