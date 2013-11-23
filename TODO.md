@@ -9,3 +9,6 @@ TODO
 <strike>- Add grunt tasks for updating the Github page</strike>
 - Come up with a better name
 - Design a better example site/page
+- Make it bower installable
+- Add some tests
+- Add a grunt lint task
