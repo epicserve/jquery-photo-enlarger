@@ -24,11 +24,22 @@ module.exports = function(grunt) {
 
         copy: {
             gh_pages: {expand: true, cwd: 'example/', src: ['**'], dest: '_site/'}
+        },
+
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            all: [
+                'Gruntfile.js',
+                'example/js/**/*.js'
+            ]
         }
 
     });
 
-    grunt.registerTask('deploy', ['copy:gh_pages', 'githubPages:target']);
+    grunt.registerTask('deploy', ['jshint', 'copy:gh_pages', 'githubPages:target']);
 
     grunt.registerTask('default', []);
 
