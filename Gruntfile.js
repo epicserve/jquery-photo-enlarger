@@ -9,7 +9,10 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
 
-        pkg: grunt.file.readJSON('package.json'),
+        dirs: {
+            src: 'example',
+            dist: 'dist'
+        },
 
         githubPages: {
             target: {
@@ -29,13 +32,44 @@ module.exports = function(grunt) {
                     hostname: 'localhost',
                     keepalive: true,
                     open: true,
-                    base: 'example'
+                    base: '<%= dirs.src %>'
                 }
             }
         },
 
         copy: {
-            gh_pages: {expand: true, cwd: 'example/', src: ['**'], dest: '_site/'}
+            gh_pages: {expand: true, cwd: '<%= dirs.src %>/', src: ['**'], dest: '_site/'},
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= dirs.src %>/js/jquery-photo-enlarger/',
+                        dest: '<%= dirs.dist %>',
+                        src: ['img/**']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= dirs.src %>/js/jquery-photo-enlarger/',
+                        dest: '<%= dirs.dist %>/js/',
+                        src: ['*.js']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= dirs.src %>/js/jquery-photo-enlarger/css/',
+                        dest: '<%= dirs.dist %>/css/',
+                        src: ['*.css']
+                    }
+                ]
+            }
+        },
+
+        clean: {
+            dist: {
+                files: [{dot: true, src: ['.tmp', '<%= dirs.dist %>']}]
+            },
+            tmp: {
+                files: [{dot: true, src: ['.tmp']}]
+            }
         },
 
         jshint: {
@@ -45,8 +79,23 @@ module.exports = function(grunt) {
             },
             all: [
                 'Gruntfile.js',
-                'example/js/**/*.js'
+                '<%= dirs.src %>/js/**/*.js'
             ]
+        },
+
+        useminPrepare: {
+            options: {
+                dest: '<%= dirs.dist %>'
+            },
+            html: '<%= dirs.src %>/index.html'
+        },
+
+        usemin: {
+            options: {
+                assetsDirs: ['<%= dirs.dist %>']
+            },
+            html: ['<%= dirs.dist %>/{,*/}*.html'],
+            css: ['<%= dirs.dist %>/css/{,*/}*.css']
         }
 
     });
@@ -54,6 +103,16 @@ module.exports = function(grunt) {
     grunt.registerTask('server', 'connect:server');
 
     grunt.registerTask('deploy', ['jshint', 'copy:gh_pages', 'githubPages:target']);
+
+    grunt.registerTask('build', [
+        'clean:dist',
+        'useminPrepare',
+        'concat',
+        'cssmin',
+        'uglify',
+        'copy:dist',
+        'clean:tmp'
+    ]);
 
     grunt.registerTask('default', []);
 
