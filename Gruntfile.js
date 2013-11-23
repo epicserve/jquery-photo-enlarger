@@ -22,6 +22,18 @@ module.exports = function(grunt) {
             }
         },
 
+        connect: {
+            server: {
+                options: {
+                    port: 9000,
+                    hostname: 'localhost',
+                    keepalive: true,
+                    open: true,
+                    base: 'example'
+                }
+            }
+        },
+
         copy: {
             gh_pages: {expand: true, cwd: 'example/', src: ['**'], dest: '_site/'}
         },
@@ -38,6 +50,8 @@ module.exports = function(grunt) {
         }
 
     });
+
+    grunt.registerTask('server', 'connect:server');
 
     grunt.registerTask('deploy', ['jshint', 'copy:gh_pages', 'githubPages:target']);
 
