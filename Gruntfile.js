@@ -38,7 +38,14 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            gh_pages: {expand: true, cwd: '<%= dirs.src %>/', src: ['**'], dest: '_site/'},
+            site: {
+                files: [
+                    {expand: true, cwd: '<%= dirs.dist %>/', src: ['**'], dest: '_site/'},
+                    {expand: true, cwd: '.tmp/', src: ['*.html'], dest: '_site/'},
+                    {expand: true, cwd: '<%= dirs.src %>/css/', src: ['main.css'], dest: '_site/css/'},
+                    {expand: true, cwd: '<%= dirs.src %>/js/', src: ['main.js'], dest: '_site/js/'}
+                ]
+            },
             dist: {
                 files: [
                     {
@@ -58,6 +65,12 @@ module.exports = function(grunt) {
                         cwd: '<%= dirs.src %>/js/jquery-photo-enlarger/css/',
                         dest: '<%= dirs.dist %>/css/',
                         src: ['*.css']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= dirs.src %>/',
+                        dest: '.tmp/',
+                        src: ['*.html']
                     }
                 ]
             }
@@ -69,6 +82,12 @@ module.exports = function(grunt) {
             },
             tmp: {
                 files: [{dot: true, src: ['.tmp']}]
+            },
+            site: {
+                files: [{dot: true, src: ['_site']}]
+            },
+            vendor_files: {
+                files: [{dot: true, src: ['<%= dirs.dist %>/css/boo*', '<%= dirs.dist %>/js/vendor*']}]
             }
         },
 
@@ -90,11 +109,33 @@ module.exports = function(grunt) {
             html: '<%= dirs.src %>/index.html'
         },
 
+        htmlmin: {
+            dist: {
+                options: {
+                    /*removeCommentsFromCDATA: true,
+                    // https://github.com/yeoman/grunt-usemin/issues/44
+                    //collapseWhitespace: true,
+                    collapseBooleanAttributes: true,
+                    removeAttributeQuotes: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: true*/
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= dirs.src %>/',
+                    src: '*.html',
+                    dest: '<%= dirs.dist %>'
+                }]
+            }
+        },
+
         usemin: {
             options: {
                 assetsDirs: ['<%= dirs.dist %>']
             },
-            html: ['<%= dirs.dist %>/{,*/}*.html'],
+            html: ['.tmp/{,*/}*.html'],
             css: ['<%= dirs.dist %>/css/{,*/}*.css']
         }
 
@@ -102,7 +143,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('server', 'connect:server');
 
-    grunt.registerTask('deploy', ['jshint', 'copy:gh_pages', 'githubPages:target']);
+    grunt.registerTask('deploy', ['jshint', 'build', 'githubPages:target']);
 
     grunt.registerTask('build', [
         'clean:dist',
@@ -111,6 +152,10 @@ module.exports = function(grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
+        'usemin',
+        'clean:site',
+        'copy:site',
+        'clean:vendor_files',
         'clean:tmp'
     ]);
 
