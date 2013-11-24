@@ -1,3 +1,5 @@
+/*! jquery-photo-enlarger.js v0.0.0 | (c) 2013 Brent O'Connor | The MIT License (MIT)
+*/
 
 'use strict';
 

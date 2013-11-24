@@ -109,6 +109,12 @@ module.exports = function(grunt) {
             html: '<%= dirs.src %>/index.html'
         },
 
+        uglify: {
+            options: {
+                preserveComments: 'some'
+            }
+        },
+
         htmlmin: {
             dist: {
                 options: {
@@ -143,9 +149,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('server', 'connect:server');
 
-    grunt.registerTask('deploy', ['jshint', 'build', 'githubPages:target']);
+    grunt.registerTask('deploy', ['build', 'githubPages:target']);
 
     grunt.registerTask('build', [
+        'jshint',
         'clean:dist',
         'useminPrepare',
         'concat',
