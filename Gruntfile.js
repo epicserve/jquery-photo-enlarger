@@ -84,7 +84,7 @@ module.exports = function(grunt) {
                 files: [{dot: true, src: ['.tmp']}]
             },
             site: {
-                files: [{dot: true, src: ['_site']}]
+                files: [{dot: true, src: ['_site/*.html', '_site/css', '_site/js', '_site/img']}]
             },
             vendor_files: {
                 files: [{dot: true, src: ['<%= dirs.dist %>/css/boo*', '<%= dirs.dist %>/js/vendor*']}]
