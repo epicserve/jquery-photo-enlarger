@@ -29,6 +29,7 @@
                 var lg_img_orig_width = $thumb_lg_img[0].width,
                     lg_img_orig_height = $thumb_lg_img[0].height,
                     $caption = $('<div class="caption">'),
+                    caption_text = $thumb_img.data('caption'),
                     max_width = lg_img_orig_width,
                     max_height = lg_img_orig_height;
 
@@ -50,7 +51,7 @@
                     $thumb.max_height = max_height;
                 }
 
-                $caption.html($thumb_img.data('caption'));
+                $caption.html(caption_text);
                 $thumb_lg_div.append($thumb_lg_img).append($('<div class="state-icon">'));
                 $thumb_lg_div.hide();
                 $thumb_lg_div.css({width: $thumb_img[0].width, height: $thumb_img[0].height});
@@ -58,13 +59,15 @@
                 $thumb_lg_div.show();
                 $thumb_lg_div.animate({width: max_width, height: max_height }, plugin.options.enlarge_speed, function() {
 
-                    $thumb_lg_div.append($caption);
-                    $thumb_lg_div.hover(
-                        function() { $caption.fadeIn(plugin.options.caption_fadein_speed); },
-                        function() { $caption.fadeOut(plugin.options.caption_fadeout_speed); }
-                    );
+                    if (typeof caption_text !== 'undefined' && caption_text !== '') {
+                        $thumb_lg_div.append($caption);
+                        $thumb_lg_div.hover(
+                            function() { $caption.fadeIn(plugin.options.caption_fadein_speed); },
+                            function() { $caption.fadeOut(plugin.options.caption_fadeout_speed); }
+                        );
+                    }
 
-                    $thumb_lg_div.find('img:first').click(function() { plugin.shrink($thumb); });
+                    $thumb_lg_img.click(function() { plugin.shrink($thumb); });
                 });
 
             });
@@ -74,13 +77,20 @@
         plugin.shrink = function($thumb) {
 
             var $thumb_lg_div = $thumb.find('.thumb-large:first'),
-                $thumb_img = $thumb.find('img:first');
+                $thumb_img = $thumb.find('img:first'),
+                $caption = $thumb_lg_div.find('.caption:first'),
+                shrink_photo = function() {
+                    $thumb_lg_div.animate({width: $thumb_img.width(), height: $thumb_img.height() }, plugin.options.shrink_speed, function() {
+                        $thumb_lg_div.remove();
+                    });
+                };
 
-            $thumb_lg_div.find('.caption').fadeOut(100, function() {
-                $thumb_lg_div.animate({width: $thumb_img.width(), height: $thumb_img.height() }, plugin.options.shrink_speed, function() {
-                    $thumb_lg_div.remove();
-                });
-            });
+            if ($caption.length === 0) {
+                shrink_photo();
+            } else {
+                $caption.fadeOut(100, shrink_photo);
+            }
+
         };
 
         return plugin.each(function() {
