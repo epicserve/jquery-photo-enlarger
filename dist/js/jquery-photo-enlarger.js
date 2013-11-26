@@ -32,7 +32,10 @@
                     max_width = lg_img_orig_width,
                     max_height = lg_img_orig_height;
 
-                if (typeof $thumb.max_width === 'undefined' && typeof $thumb.max_height === 'undefined') {
+                if (typeof $thumb.max_width !== 'undefined' && typeof $thumb.max_height !== 'undefined') {
+                    max_width = $thumb.max_width;
+                    max_height = $thumb.max_height;
+                } else {
                     if (plugin.options.max_width_container === null) {
                         max_width = $thumb.parent().parent().width();
                     } else if (plugin.options.max_width_container instanceof $) {
@@ -45,9 +48,6 @@
 
                     $thumb.max_width = max_width;
                     $thumb.max_height = max_height;
-                } else {
-                    max_width = $thumb.max_width;
-                    max_height = $thumb.max_height;
                 }
 
                 $caption.html($thumb_img.data('caption'));
