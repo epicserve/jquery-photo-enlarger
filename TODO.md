@@ -11,6 +11,7 @@ TODO
 ~~- Add a grunt task that automatically minifies the JS~~  
 ~~- Make it bower installable~~  
 ~~- Fix the [issue](https://github.com/epicserve/jquery-photo-enlarger/issues/1) where its not working on Chrome 31 on iOS 7.0.4~~  
+- Add a source map to the JS source
 - Come up with a better name
 - Design a better example site/page
 - Add some tests
