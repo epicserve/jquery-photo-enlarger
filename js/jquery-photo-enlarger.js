@@ -47,17 +47,20 @@
                         max_height = lg_img_orig_height * (max_width / lg_img_orig_width);
                     }
 
+                    // save the widths and heights to the thumb instance
                     $thumb.max_width = max_width;
                     $thumb.max_height = max_height;
+                    $thumb.width = $thumb_img[0].width;
+                    $thumb.height = $thumb_img[0].height;
                 }
 
                 $caption.html(caption_text);
-                $thumb_lg_div.append($thumb_lg_img).append($('<div class="state-icon">'));
                 $thumb_lg_div.hide();
-                $thumb_lg_div.css({width: $thumb_img[0].width, height: $thumb_img[0].height});
+                $thumb_lg_div.css({width: $thumb.width, height: $thumb.height});
+                $thumb_lg_div.append($thumb_lg_img).append($('<div class="state-icon">'));
                 $thumb.append($thumb_lg_div);
                 $thumb_lg_div.show();
-                $thumb_lg_div.animate({width: max_width, height: max_height }, plugin.options.enlarge_speed, function() {
+                $thumb_lg_div.animate({width: max_width, height: max_height}, plugin.options.enlarge_speed, function() {
 
                     if (typeof caption_text !== 'undefined' && caption_text !== '') {
                         $thumb_lg_div.append($caption);
@@ -77,10 +80,9 @@
         plugin.shrink = function($thumb) {
 
             var $thumb_lg_div = $thumb.find('.thumb-large:first'),
-                $thumb_img = $thumb.find('img:first'),
                 $caption = $thumb_lg_div.find('.caption:first'),
                 shrink_photo = function() {
-                    $thumb_lg_div.animate({width: $thumb_img.width(), height: $thumb_img.height() }, plugin.options.shrink_speed, function() {
+                    $thumb_lg_div.animate({width: $thumb.width, height: $thumb.height}, plugin.options.shrink_speed, function() {
                         $thumb_lg_div.remove();
                     });
                 };
