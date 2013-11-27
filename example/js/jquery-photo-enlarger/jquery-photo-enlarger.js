@@ -29,6 +29,7 @@
                 var lg_img_orig_width = $thumb_lg_img[0].width,
                     lg_img_orig_height = $thumb_lg_img[0].height,
                     $caption = $('<div class="caption">'),
+                    $state_icon = $('<div class="state-icon">'),
                     caption_text = $thumb_img.data('caption'),
                     max_width = lg_img_orig_width,
                     max_height = lg_img_orig_height;
@@ -57,7 +58,7 @@
                 $caption.html(caption_text);
                 $thumb_lg_div.hide();
                 $thumb_lg_div.css({width: $thumb.width, height: $thumb.height});
-                $thumb_lg_div.append($thumb_lg_img).append($('<div class="state-icon">'));
+                $thumb_lg_div.append($thumb_lg_img).append($state_icon);
                 $thumb.append($thumb_lg_div);
                 $thumb_lg_div.show();
                 $thumb_lg_div.animate({width: max_width, height: max_height}, plugin.options.enlarge_speed, function() {
@@ -71,6 +72,7 @@
                     }
 
                     $thumb_lg_img.click(function() { plugin.shrink($thumb); });
+                    $state_icon.click(function() { plugin.shrink($thumb); });
                 });
 
             });
@@ -99,16 +101,18 @@
 
             var $thumb = $(this),
                 $thumb_img = $thumb.find('img:first'),
+                $state_icon = $('<div class="state-icon">'),
                 large_img_url = $thumb_img.data('large_photo'),
                 _img = new Image();
 
             // pre-load large images
             _img.src = large_img_url;
 
-            $thumb.append('<div class="state-icon">');
+            $state_icon.click(function() { plugin.enlarge($thumb); });
             $thumb_img.click(function() {
                 plugin.enlarge($thumb);
             });
+            $thumb.append($state_icon);
 
             return $thumb;
         });
