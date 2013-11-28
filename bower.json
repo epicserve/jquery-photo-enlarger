@@ -14,7 +14,7 @@
     "example"
   ],
   "dependencies": {
-    "jquery": "~2.0.3",
+    "jquery": "~1.10.2",
     "imagesloaded": "~3.0.4"
   },
   "devDependencies": {
