@@ -34,6 +34,18 @@ module.exports = function(grunt) {
                     open: true,
                     base: '<%= dirs.src %>'
                 }
+            },
+            test: {
+                options: {
+                    base: ['tests', '<%= dirs.src %>']
+                }
+            },
+            test_server: {
+                options: {
+                    keepalive: true,
+                    open: true,
+                    base: ['tests', '<%= dirs.src %>']
+                }
             }
         },
 
@@ -102,6 +114,15 @@ module.exports = function(grunt) {
             ]
         },
 
+        mocha: {
+            all: {
+                options: {
+                    run: true,
+                    urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+                }
+            }
+        },
+
         useminPrepare: {
             options: {
                 dest: '<%= dirs.dist %>'
@@ -151,7 +172,15 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy', ['build', 'githubPages:target']);
 
+    grunt.registerTask('test_server', 'connect:test_server');
+
+    grunt.registerTask('test', [
+        'connect:test',
+        'mocha'
+    ]);
+
     grunt.registerTask('build', [
+        'test',
         'jshint',
         'clean:dist',
         'useminPrepare',

@@ -28,7 +28,7 @@
 
                 var lg_img_orig_width = $thumb_lg_img[0].width,
                     lg_img_orig_height = $thumb_lg_img[0].height,
-                    $caption = $('<div class="caption">'),
+                    $caption = $('<div class="caption"><p>'),
                     $state_icon = $('<div class="state-icon">'),
                     caption_text = $thumb_img.data('caption'),
                     max_width = lg_img_orig_width,
@@ -55,7 +55,6 @@
                     $thumb.height = $thumb_img[0].height;
                 }
 
-                $caption.html(caption_text);
                 $thumb_lg_div.hide();
                 $thumb_lg_div.css({width: $thumb.width, height: $thumb.height});
                 $thumb_lg_div.append($thumb_lg_img).append($state_icon);
@@ -64,6 +63,7 @@
                 $thumb_lg_div.animate({width: max_width, height: max_height}, plugin.options.enlarge_speed, function() {
 
                     if (typeof caption_text !== 'undefined' && caption_text !== '') {
+                        $caption.find('p:first').html(caption_text);
                         $thumb_lg_div.append($caption);
                         $thumb_lg_div.hover(
                             function() { $caption.fadeIn(plugin.options.caption_fadein_speed); },
@@ -73,6 +73,7 @@
 
                     $thumb_lg_img.click(function() { plugin.shrink($thumb); });
                     $state_icon.click(function() { plugin.shrink($thumb); });
+
                 });
 
             });

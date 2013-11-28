@@ -32,6 +32,9 @@
     position: absolute;
     bottom: 0;
     right: 0;
+}
+.thumb-large .caption p {
+    margin: 0;
     padding: 10px;
 }
 .thumb-large {
