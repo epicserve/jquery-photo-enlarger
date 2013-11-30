@@ -29,6 +29,7 @@ var assert = assert || {},
                 $('.thumb:first img:first').click();
                 setTimeout(function() {
                     var $thumb = $('.thumb:first'),
+                        $thumb_img = $thumb.find('img:first'),
                         $large_img = $thumb.find('.thumb-large:first img:first'),
                         $icon = $thumb.find('.thumb-large:first .state-icon:first'),
                         _data = $._data($large_img[0]),
@@ -38,6 +39,12 @@ var assert = assert || {},
                     expect(_data.events).to.have.property('click');
                     expect(_data.events.click).to.be.an('Array');
                     expect(_data.events.click).to.have.length(1);
+                    expect($thumb_img[0]).to.have.property('width');
+                    expect($thumb_img[0]).to.have.property('height');
+                    expect($thumb_img[0].width).to.equal(210);
+                    expect($large_img[0]).to.have.property('width');
+                    expect($large_img[0]).to.have.property('height');
+                    expect($large_img[0].width).to.be.above($thumb_img[0].width);
 
                     // check icon data
                     expect(_icon_data.events).to.have.property('click');
