@@ -28,7 +28,7 @@
 
                 var lg_img_orig_width = $thumb_lg_img[0].width,
                     lg_img_orig_height = $thumb_lg_img[0].height,
-                    $caption = $('<div class="caption"><p>'),
+                    $caption = $('<div class="caption"></div>'),
                     $state_icon = $('<div class="state-icon">'),
                     caption_text = $thumb_img.data('caption'),
                     max_width = lg_img_orig_width,
