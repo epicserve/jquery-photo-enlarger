@@ -13,7 +13,8 @@
                 'caption_fadein_speed': 500,
                 'caption_fadeout_speed': 500,
                 'enlarge_speed': 300,
-                'shrink_speed': 300
+                'shrink_speed': 300,
+                'add_caption_function': null
             };
 
         plugin.options = $.extend(default_options, options);
@@ -62,7 +63,9 @@
                 $thumb_lg_div.show();
                 $thumb_lg_div.animate({width: max_width, height: max_height}, plugin.options.enlarge_speed, function() {
 
-                    if (typeof caption_text !== 'undefined' && caption_text !== '') {
+                    if (typeof plugin.options.add_caption_function === 'function') {
+                        plugin.options.add_caption_function($caption, caption_text, $thumb_lg_div, plugin);
+                    } else if (typeof caption_text !== 'undefined' && caption_text !== '') {
                         $caption.find('p:first').html(caption_text);
                         $thumb_lg_div.append($caption);
                         $thumb_lg_div.hover(

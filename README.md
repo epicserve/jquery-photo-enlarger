@@ -88,4 +88,7 @@ Options
     <tr>
         <td>shrink_speed</td><td>300</td><td>The time it takes for photo to shrink.</td>
     </tr>
+    <tr>
+        <td>add_caption_function</td><td>null</td><td>Use a custom function for adding the caption. Called with the arguements $caption, caption_text, $thumb_lg_div and plugin.</td>
+    </tr>
 </table>
